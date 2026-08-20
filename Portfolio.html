@@ -1,0 +1,518 @@
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="David Abe — Grade 10 learner, student developer, mathematics enthusiast and aspiring engineer.">
+<title>David Abe | Student Developer</title>
+<style>
+:root{
+  --bg:#05070d;
+  --bg2:#0a1020;
+  --card:rgba(14,22,38,.78);
+  --text:#f5f7ff;
+  --muted:#9aa8bd;
+  --cyan:#00e5ff;
+  --purple:#8b5cf6;
+  --blue:#3b82f6;
+  --line:rgba(0,229,255,.16);
+  --glow:0 0 35px rgba(0,229,255,.16);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 10% 15%,rgba(0,229,255,.08),transparent 24%),
+    radial-gradient(circle at 90% 45%,rgba(139,92,246,.10),transparent 25%),
+    linear-gradient(135deg,var(--bg),var(--bg2));
+  color:var(--text);
+  line-height:1.65;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit;text-decoration:none}
+/* Skip link for keyboard users */
+.skip-link{
+  position:absolute;left:12px;top:12px;padding:8px 12px;background:#001018;color:var(--cyan);border-radius:6px;z-index:2000;transform:translateY(-120%);transition:transform .18s ease;box-shadow:0 6px 18px rgba(0,0,0,.6)
+}
+.skip-link:focus{transform:none}
+#particles{position:fixed;inset:0;z-index:-1;opacity:.5}
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:12px 6%;
+  background:rgba(5,7,13,.6);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.04)
+}
+.logo{font-size:1.25rem;font-weight:900;letter-spacing:.12em}
+.logo span{color:var(--cyan);text-shadow:0 0 12px var(--cyan)}
+.nav-links{display:flex;gap:20px;list-style:none}
+.nav-links a{font-size:.95rem;color:#b9c6d8;transition:color .2s}
+.nav-links a:hover,.nav-links a:focus{color:var(--cyan);outline:none}
+.menu{display:none;background:none;border:0;color:white;font-size:1.6rem}
+section{padding:90px 6%;max-width:1200px;margin:auto}
+#home{min-height:calc(100vh - 68px);display:grid;place-items:center;padding-top:96px}
+/* More flexible hero layout */
+.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:center;width:100%}
+.eyebrow{color:var(--cyan);font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;margin-bottom:14px}
+h1{font-size:clamp(2.4rem,6.5vw,5.2rem);line-height:1;letter-spacing:-.04em}
+h1 span{
+  color:transparent;
+  -webkit-text-stroke:1px var(--cyan);
+  text-shadow:0 0 20px rgba(0,229,255,.14)
+}
+.typing{margin:18px 0;font-size:clamp(1rem,1.9vw,1.25rem);color:#cbd7e7}
+.typing b{color:var(--cyan)}
+.hero p{max-width:680px;color:var(--muted);font-size:1rem}
+.buttons{display:flex;gap:12px;margin-top:22px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:11px 18px;border-radius:10px;border:1px solid var(--cyan);
+  transition:transform .22s,box-shadow .22s;font-weight:700
+}
+.btn.primary{
+  background:linear-gradient(135deg,var(--cyan),var(--blue));
+  color:#001018;box-shadow:var(--glow)
+}
+.btn.secondary{color:var(--cyan);background:rgba(0,229,255,.035)}
+.btn:focus{outline:3px solid rgba(0,229,255,.12);outline-offset:3px}
+.btn:hover{transform:translateY(-3px);box-shadow:0 0 22px rgba(0,229,255,.18)}
+.profile{
+  width:min(320px,62vw);aspect-ratio:1;border-radius:50%;
+  border:1px solid rgba(0,229,255,.45);
+  background:
+    radial-gradient(circle at 50% 35%,rgba(0,229,255,.12),transparent 35%),
+    radial-gradient(circle,rgba(139,92,246,.08),rgba(7,12,23,.9) 65%);
+  box-shadow:0 0 0 10px rgba(0,229,255,.02),0 0 60px rgba(0,229,255,.10);
+  display:grid;place-items:center;position:relative;overflow:hidden;
+  margin:auto;
+}
+.profile::before{
+  content:"DAVID";
+  font-size:3.25rem;font-weight:900;letter-spacing:-.06em;
+  color:rgba(0,229,255,.08)
+}
+.profile::after{
+  content:"LEARN • BUILD • GROW";
+  position:absolute;bottom:30px;font-size:.62rem;
+  letter-spacing:.18em;color:rgba(255,255,255,.34)
+}
+.section-title{margin-bottom:34px}
+.section-title .small{color:var(--cyan);font-size:.75rem;letter-spacing:.18em;text-transform:uppercase}
+h2{font-size:clamp(1.6rem,3.2vw,2.6rem);line-height:1.05;margin-top:6px}
+/* Responsive, auto-fit grids */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.card{
+  background:linear-gradient(145deg,rgba(14,24,42,.86),rgba(6,10,19,.75));
+  border:1px solid var(--line);border-radius:14px;padding:18px;
+  box-shadow:var(--glow);transition:transform .28s ease,box-shadow .28s ease;position:relative;overflow:hidden
+}
+.card::before{
+  content:"";position:absolute;width:110px;height:110px;
+  background:var(--cyan);filter:blur(80px);opacity:.04;right:-45px;top:-45px
+}
+.card:hover{transform:translateY(-6px);border-color:rgba(0,229,255,.38)}
+.card h3{margin-bottom:8px;font-size:1.05rem}
+.card p{color:var(--muted);font-size:.93rem}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+.about-text p{color:var(--muted);margin-bottom:14px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.fact{padding:14px;border-left:3px solid var(--cyan);background:rgba(0,229,255,.03)}
+.fact small{
+  display:block;color:#71829a;font-size:.72rem;
+  text-transform:uppercase;letter-spacing:.08em
+}
+.fact strong{display:block;margin-top:6px}
+.tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}
+.tag{
+  padding:7px 10px;border:1px solid var(--line);
+  border-radius:999px;color:#bcd0e1;background:rgba(255,255,255,.02);
+  font-size:.8rem
+}
+.timeline{border-left:1px solid var(--line);padding-left:20px}
+.timeline-item{margin-bottom:22px;position:relative}
+.timeline-item::before{
+  content:"";position:absolute;left:-26px;top:6px;width:10px;height:10px;
+  border-radius:50%;background:var(--cyan);box-shadow:0 0 10px var(--cyan)
+}
+.timeline-item small{color:var(--cyan)}
+.timeline-item h3{margin:4px 0}
+.timeline-item p{color:var(--muted)}
+.project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.project{
+  min-height:200px;display:flex;flex-direction:column;justify-content:space-between
+}
+.project .number{font-size:.72rem;color:var(--cyan);letter-spacing:.15em}
+.project .icon{font-size:1.9rem;margin:10px 0}
+.quote{
+  padding:26px;border:1px solid var(--line);border-radius:16px;
+  background:linear-gradient(135deg,rgba(0,229,255,.04),rgba(139,92,246,.05));
+  text-align:center
+}
+.quote p{font-size:1.08rem;color:#dce8f5}
+.quote strong{display:block;margin-top:10px;color:var(--cyan)}
+footer{
+  padding:36px 6%;border-top:1px solid rgba(255,255,255,.06);
+  text-align:center;color:#718198
+}
+footer strong{color:var(--cyan)}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.reveal.show{opacity:1;transform:none}
+/* Focus styles for accessibility */
+:focus{outline-offset:3px}
+:focus-visible{outline:3px solid rgba(0,229,255,.12);outline-offset:3px}
+@media(max-width:900px){
+  .nav-links{display:none;position:absolute;top:58px;left:0;right:0;padding:16px 6%;
+    background:#070b14;flex-direction:column;gap:12px}
+  .nav-links.open{display:flex}.menu{display:block}
+  .hero,.about{grid-template-columns:1fr}
+  .profile-wrap{order:-1}
+  section{padding:70px 5%}
+}
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .reveal{transition:none!important;opacity:1;transform:none}
+  #particles{display:none}
+}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to content</a>
+<canvas id="particles"></canvas>
+
+<nav>
+  <a class="logo" href="#home">DAVID<span>.</span></a>
+  <button class="menu" aria-label="Open menu">☰</button>
+  <ul id="nav-links" class="nav-links" aria-hidden="true">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#learning">Learning</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#journey">Journey</a></li>
+    <li><a href="#goals">Goals</a></li>
+  </ul>
+</nav>
+
+<main id="main-content">
+<section id="home">
+  <div class="hero reveal">
+    <div>
+      <div class="eyebrow">Hello, I'm</div>
+      <h1>David <span>Abe</span></h1>
+      <div class="typing">I'm a <b id="typed">Grade 10 Learner</b><span>_</span></div>
+      <p>
+        A curious Grade 10 learner who enjoys mathematics, coding, technology and creative design.
+        I'm building my skills one project, one problem and one challenge at a time.
+      </p>
+      <div class="buttons">
+        <a class="btn primary" href="#projects">Explore My Work</a>
+        <a class="btn secondary" href="#goals">My Direction</a>
+      </div>
+    </div>
+    <div class="profile-wrap">
+      <div class="profile" aria-label="David profile placeholder"></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-title reveal">
+    <div class="small">01 / About Me</div>
+    <h2>Learning today.<br>Building tomorrow.</h2>
+  </div>
+  <div class="about reveal">
+    <div class="about-text">
+      <p>
+        I'm <strong>David Abe</strong>, a Grade 10 learner with a strong interest in
+        mathematics, economics, coding, graphic design and digital technology.
+      </p>
+      <p>
+        I enjoy understanding how things work and then turning what I learn into something
+        practical — whether that is solving a difficult mathematics problem, building with
+        Git and GitHub, designing an interface, or planning a new app.
+      </p>
+      <p>
+        I'm also preparing myself academically for bigger challenges such as WAEC, NECO,
+        SAT, Olympiad-style mathematics and Interswitch SPAK.
+      </p>
+      <div class="tags">
+        <span class="tag">Mathematics</span>
+        <span class="tag">Coding</span>
+        <span class="tag">Graphic Design</span>
+        <span class="tag">Technology</span>
+        <span class="tag">Problem Solving</span>
+        <span class="tag">Continuous Learning</span>
+      </div>
+    </div>
+    <div class="facts">
+      <div class="fact"><small>Current Level</small><strong>Grade 10</strong></div>
+      <div class="fact"><small>Country</small><strong>Nigeria</strong></div>
+      <div class="fact"><small>Favourite Subjects</small><strong>Mathematics & Economics</strong></div>
+      <div class="fact"><small>Creative Interests</small><strong>Coding & Graphic Design</strong></div>
+      <div class="fact"><small>Learning Style</small><strong>Practical & Challenge-Based</strong></div>
+      <div class="fact"><small>Long-Term Direction</small><strong>Technology & Engineering</strong></div>
+    </div>
+  </div>
+</section>
+
+<section id="learning">
+  <div class="section-title reveal">
+    <div class="small">02 / Learning</div>
+    <h2>What I'm working on.</h2>
+  </div>
+  <div class="grid reveal">
+    <div class="card">
+      <h3>∑ Mathematics</h3>
+      <p>Algebra, variation, statistics, set theory, probability, trigonometry, partial fractions and advanced problem solving.</p>
+    </div>
+    <div class="card">
+      <h3>⚡ Physics</h3>
+      <p>Motion, work, energy, power, moments, waves, heat, gas laws, sound and physical quantities.</p>
+    </div>
+    <div class="card">
+      <h3>🧪 Sciences</h3>
+      <p>Building stronger foundations in Chemistry, Biology and practical scientific thinking.</p>
+    </div>
+    <div class="card">
+      <h3>💻 Git & GitHub</h3>
+      <p>Learning repositories, branches, commits, pull requests, merge requests and resolving conflicts.</p>
+    </div>
+    <div class="card">
+      <h3>🌐 Web Development</h3>
+      <p>Exploring HTML, CSS, JavaScript and the process of turning ideas into useful web experiences.</p>
+    </div>
+    <div class="card">
+      <h3>🤖 AI & Digital Technology</h3>
+      <p>Learning how to use AI effectively, build digital projects and understand modern technology.</p>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-title reveal">
+    <div class="small">03 / Projects & Ideas</div>
+    <h2>Things I want to build.</h2>
+  </div>
+  <div class="project-grid reveal">
+    <div class="card project">
+      <div>
+        <div class="number">PROJECT 01</div>
+        <div class="icon">📚</div>
+        <h3>Personal Quiz & Learning App</h3>
+        <p>A TestDriller-style learning platform with grade selection, learner/admin modes, randomized question pools, scoring and Firebase integration.</p>
+      </div>
+      <div class="tags"><span class="tag">Firebase</span><span class="tag">Quiz App</span><span class="tag">Education</span></div>
+    </div>
+    <div class="card project">
+      <div>
+        <div class="number">PROJECT 02</div>
+        <div class="icon">🧑‍💻</div>
+        <h3>Developer Portfolio</h3>
+        <p>A personal digital space showing my learning journey, projects, goals and progress as I grow in technology.</p>
+      </div>
+      <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div>
+    </div>
+    <div class="card project">
+      <div>
+        <div class="number">PROJECT 03</div>
+        <div class="icon">🎨</div>
+        <h3>Creative Design Work</h3>
+        <p>Exploring profile graphics, backgrounds, visual identities and technology-themed designs.</p>
+      </div>
+      <div class="tags"><span class="tag">Design</span><span class="tag">Branding</span><span class="tag">Visuals</span></div>
+    </div>
+    <div class="card project">
+      <div>
+        <div class="number">PROJECT 04</div>
+        <div class="icon">🧠</div>
+        <h3>Study & Exam System</h3>
+        <p>Creating structured revision materials, question banks, mock exams and trackers for long-term academic preparation.</p>
+      </div>
+      <div class="tags"><span class="tag">WAEC</span><span class="tag">NECO</span><span class="tag">SAT</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="journey">
+  <div class="section-title reveal">
+    <div class="small">04 / My Journey</div>
+    <h2>A timeline of growth.</h2>
+  </div>
+  <div class="timeline reveal">
+    <div class="timeline-item">
+      <small>NOW</small>
+      <h3>Grade 10 Learner</h3>
+      <p>Strengthening Mathematics, sciences, languages, economics, further mathematics and digital technology.</p>
+    </div>
+    <div class="timeline-item">
+      <small>ACADEMIC DEVELOPMENT</small>
+      <h3>Competitive Exam Preparation</h3>
+      <p>Preparing for future WAEC/NECO work while also exploring SAT, Olympiad and SPAK-style challenges.</p>
+    </div>
+    <div class="timeline-item">
+      <small>TECH JOURNEY</small>
+      <h3>From Git Basics to Real Projects</h3>
+      <p>Moving from Git setup, branches and merges toward building complete applications and useful digital tools.</p>
+    </div>
+    <div class="timeline-item">
+      <small>CREATIVE JOURNEY</small>
+      <h3>Coding + Graphic Design</h3>
+      <p>Combining technical thinking with visual creativity to make projects that are both useful and attractive.</p>
+    </div>
+  </div>
+</section>
+
+<section id="goals">
+  <div class="section-title reveal">
+    <div class="small">05 / Direction</div>
+    <h2>Where I'm heading.</h2>
+  </div>
+  <div class="grid reveal">
+    <div class="card"><h3>🎓 Academic Excellence</h3><p>Build strong foundations and become highly prepared for major examinations and competitions.</p></div>
+    <div class="card"><h3>⚙ Engineering & Technology</h3><p>Grow from a learner into someone capable of designing and building solutions to real problems.</p></div>
+    <div class="card"><h3>💻 Software Development</h3><p>Turn coding knowledge into useful apps, websites and educational technology.</p></div>
+    <div class="card"><h3>🧮 Advanced Mathematics</h3><p>Move beyond memorising formulas toward deeper reasoning, proof and competition-level problem solving.</p></div>
+    <div class="card"><h3>🎨 Creative Technology</h3><p>Combine programming and graphic design to create polished digital experiences.</p></div>
+    <div class="card"><h3>🚀 Continuous Growth</h3><p>Keep learning, experimenting, asking better questions and improving every project.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="quote reveal">
+    <p>“I don't just want to learn technology. I want to understand it, build with it, and use it to solve problems.”</p>
+    <strong>— David Abe</strong>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p>Designed & built for <strong>David Abe</strong> • Grade 10 Learner • <em>Learn. Build. Grow.</em></p>
+</footer>
+
+<script>
+// Typing headline (robust to missing element)
+const titles=[
+  "Grade 10 Learner",
+  "Student Developer",
+  "Mathematics Enthusiast",
+  "Aspiring Engineer",
+  "Tech Explorer",
+  "Creative Problem Solver"
+];
+const typedEl=document.getElementById("typed");
+if(typedEl){
+  let ti=0,ci=0,deleting=false;
+  function type(){
+    const word=titles[ti];
+    typedEl.textContent = deleting ? word.slice(0,--ci) : word.slice(0,++ci);
+    let speed = deleting ? 45 : 75;
+    if(!deleting && ci===word.length){ deleting = true; speed = 1200; }
+    else if(deleting && ci===0){ deleting = false; ti = (ti+1) % titles.length; speed = 250; }
+    setTimeout(type, speed);
+  }
+  type();
+}
+
+// Accessible mobile menu
+const menu = document.querySelector('.menu');
+const links = document.getElementById('nav-links');
+if(menu && links){
+  menu.setAttribute('aria-expanded','false');
+  links.setAttribute('aria-hidden','true');
+  menu.addEventListener('click', ()=>{
+    const open = links.classList.toggle('open');
+    links.setAttribute('aria-hidden', open ? 'false' : 'true');
+    menu.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if(open) links.querySelector('a')?.focus();
+  });
+  // Close on link click
+  links.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>{
+    links.classList.remove('open');
+    links.setAttribute('aria-hidden','true');
+    menu.setAttribute('aria-expanded','false');
+  }));
+  // Close on Escape
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape' && links.classList.contains('open')){
+      links.classList.remove('open');
+      links.setAttribute('aria-hidden','true');
+      menu.setAttribute('aria-expanded','false');
+      menu.focus();
+    }
+  });
+}
+
+// Reveal on scroll
+const observer = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+},{threshold: .12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// Particle background with reduced motion & responsive count
+const canvas = document.getElementById('particles');
+const ctx = canvas?.getContext ? canvas.getContext('2d') : null;
+let particles = [];
+let animId = null;
+function resize(){ if(!canvas) return; canvas.width = innerWidth; canvas.height = innerHeight; }
+addEventListener('resize', ()=>{ resize(); initParticles(); });
+resize();
+
+function particleCountForSize(){
+  if(window.matchMedia('(max-width:600px)').matches) return 30;
+  if(window.matchMedia('(max-width:1200px)').matches) return 50;
+  return 75;
+}
+
+function initParticles(){
+  if(!ctx || window.matchMedia('(prefers-reduced-motion: reduce)').matches){ particles = []; return; }
+  const count = particleCountForSize();
+  particles = Array.from({length: count}, ()=>({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    vx: (Math.random()-.5)*.45,
+    vy: (Math.random()-.5)*.45,
+    r: Math.random()*1.6+.3
+  }));
+}
+initParticles();
+
+function animate(){
+  if(!ctx) return;
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  for(let i=0;i<particles.length;i++){
+    const p = particles[i];
+    p.x += p.vx; p.y += p.vy;
+    if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+    if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    ctx.fillStyle = 'rgba(0,229,255,.45)'; ctx.fill();
+    for(let j=i+1;j<particles.length;j++){
+      const q = particles[j];
+      const dx = p.x - q.x, dy = p.y - q.y, d = Math.hypot(dx,dy);
+      if(d < 120){ ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y); ctx.strokeStyle = `rgba(0,229,255,${0.09*(1-d/120)})`; ctx.stroke(); }
+    }
+  }
+  animId = requestAnimationFrame(animate);
+}
+
+// Pause animation when tab not visible
+document.addEventListener('visibilitychange', ()=>{
+  if(document.hidden){ if(animId) cancelAnimationFrame(animId); animId = null; }
+  else if(!animId && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){ animate(); }
+});
+
+// Start animation unless user prefers reduced motion
+if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches && ctx){ animate(); }
+</script>
+</body>
+</html>
+'''
+
+path = Path("/mnt/data/David_Abe_Personalized_Portfolio.html")
+path.write_text(html, encoding="utf-8")
+print(f"Created: {path}")
